@@ -8,17 +8,16 @@ const PinIcon: React.FC<{ pinned: boolean }> = ({ pinned }) => (
   </svg>
 );
 
-const ChatIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.006 3 11.5c0 4.556 4.03 8.25 9 8.25z" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.158 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l3.662-3.738c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.206 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.344 48.344 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-  </svg>
-);
-
 const DotsVerticalIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
   </svg>
+);
+
+const PlusCircleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
 );
 
 
@@ -48,11 +47,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelect, onOpenChat, 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleOpenChat = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onOpenChat(task);
-  }
-
   const handleMenuToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsMenuOpen(prev => !prev);
@@ -78,19 +72,29 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelect, onOpenChat, 
       <div>
         <div className="flex justify-between items-start mb-2">
           <span className="text-sm font-medium text-text-secondary">{task.id}</span>
-           <div className="relative" ref={menuRef}>
-            <button 
-              onClick={handleMenuToggle}
-              className="text-text-secondary hover:text-accent p-1 rounded-full hover:bg-card-hover"
+           <div className="flex items-center gap-2">
+            {task.pinned && <PinIcon pinned={true} />}
+            <button
+                onClick={(e) => { e.stopPropagation(); onOpenChat(task); }}
+                className="text-text-secondary hover:text-accent p-1 rounded-full hover:bg-card-hover"
+                aria-label="Open task chat"
             >
-              <DotsVerticalIcon className="w-5 h-5" />
+                <PlusCircleIcon className="w-5 h-5" />
             </button>
-            {isMenuOpen && (
-              <div className="absolute top-full right-0 mt-1 w-36 bg-card-hover border border-border rounded-md shadow-lg z-10">
-                <button onClick={handlePin} className="w-full text-left block px-4 py-2 text-sm text-text-secondary hover:bg-sidebar">{task.pinned ? 'Unpin Task' : 'Pin Task'}</button>
-                <button onClick={handleArchive} className="w-full text-left block px-4 py-2 text-sm text-text-secondary hover:bg-sidebar">Archive Task</button>
-              </div>
-            )}
+            <div className="relative" ref={menuRef}>
+              <button 
+                onClick={handleMenuToggle}
+                className="text-text-secondary hover:text-accent p-1 rounded-full hover:bg-card-hover"
+              >
+                <DotsVerticalIcon className="w-5 h-5" />
+              </button>
+              {isMenuOpen && (
+                <div className="absolute top-full right-0 mt-1 w-36 bg-card-hover border border-border rounded-md shadow-lg z-10">
+                  <button onClick={handlePin} className="w-full text-left block px-4 py-2 text-sm text-text-secondary hover:bg-sidebar">{task.pinned ? 'Unpin Task' : 'Pin Task'}</button>
+                  <button onClick={handleArchive} className="w-full text-left block px-4 py-2 text-sm text-text-secondary hover:bg-sidebar">Archive Task</button>
+                </div>
+              )}
+            </div>
            </div>
         </div>
         <h3 className="font-semibold text-text-primary mb-2">{task.title}</h3>
@@ -106,13 +110,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelect, onOpenChat, 
             <span className="text-xs text-text-secondary">{task.status}</span>
           </div>
         </div>
-        <button 
-          onClick={handleOpenChat}
-          className="text-text-secondary hover:text-accent transition-colors p-1 rounded-full hover:bg-card-hover"
-          aria-label={`Open chat for task ${task.id}`}
-        >
-          <ChatIcon className="w-5 h-5" />
-        </button>
       </div>
     </div>
   );

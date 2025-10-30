@@ -45,5 +45,6 @@ export interface WorkflowNode {
   type: string;
   label: string;
   position: Point;
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  // Fix: Replaced JSX.Element with React.ReactElement to resolve missing JSX namespace error.
+  icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
 }

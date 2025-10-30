@@ -52,10 +52,33 @@ export const TaskChatModal: React.FC<TaskChatModalProps> = ({ task, onClose, onU
   const [isLoading, setIsLoading] = useState(false);
   const [displayMode, setDisplayMode] = useState<DisplayMode>('modal');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const modalContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+        if (displayMode === 'modal' && modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
+            onClose();
+        }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onClose, displayMode]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
 
   const handleSendMessage = async (message: string) => {
     const userMessage: ChatMessage = { sender: MessageSender.USER, text: message };
@@ -126,7 +149,7 @@ export const TaskChatModal: React.FC<TaskChatModalProps> = ({ task, onClose, onU
 
   return (
     <div className={wrapperClasses[displayMode]} aria-modal={displayMode === 'modal'}>
-      <div className={modalContainerClasses[displayMode]}>
+      <div className={modalContainerClasses[displayMode]} ref={modalContentRef}>
         <div className="p-4 border-b border-border flex justify-between items-center flex-shrink-0">
             <div className="overflow-hidden">
                 <h3 className="font-semibold text-text-primary truncate pr-2">{task.id}: {task.title}</h3>

@@ -58,7 +58,7 @@ const App: React.FC = () => {
       case 'tasks':
         return (
           <TasksView
-            tasks={visibleTasks.filter(t => !t.pinned)}
+            tasks={visibleTasks}
             onSelectTask={setSelectedTask}
             onOpenTaskChat={setTaskForChatModal}
             onPinTask={handlePinTask}

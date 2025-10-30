@@ -22,10 +22,6 @@ export const TaskList: React.FC<TaskListProps> = ({
   activeTaskId,
   viewMode = 'grid'
 }) => {
-  if (tasks.length === 0) {
-    return <div className="text-center text-text-secondary py-10">No tasks found.</div>
-  }
-  
   if (viewMode === 'list') {
     return (
       <div className="space-y-2">
