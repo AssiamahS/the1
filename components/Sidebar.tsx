@@ -5,9 +5,9 @@ const TasksIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
     </svg>
 );
-const AgentsIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+const RocketIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962c.513-.96 1.487-1.593 2.571-1.82m-2.571 1.82a3 3 0 00-2.134 2.134m2.134-2.134a3 3 0 012.134-2.134M15.75 5.25a3 3 0 01-3 3m3-3a3 3 0 00-3-3m-3.75 3a3 3 0 013-3m-3 3a3 3 0 00-3 3m6.75 0a3 3 0 013-3m-3.75 3a3 3 0 01-3-3m3-3a3 3 0 00-3 3m-3 3a3 3 0 01-3-3m3 3a3 3 0 003 3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.82m5.84-2.56a12.022 12.022 0 0 0-5.84 0m5.84 0a11.953 11.953 0 0 1-2.62 3.32m-3.22-3.32a12.022 12.022 0 0 1-5.84 0m5.84 0a11.953 11.953 0 0 0-2.62 3.32m-3.22-3.32a6 6 0 0 1 5.84-7.38v4.82m-5.84 2.56a12.022 12.022 0 0 0 5.84 0" />
     </svg>
 );
 const WorkflowsIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -24,6 +24,11 @@ const PinIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path fillRule="evenodd" d="M16.5 3.75a.75.75 0 0 1 .75.75v10.19l2.47-2.47a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 1 1 1.06-1.06l2.47 2.47V4.5a.75.75 0 0 1 .75-.75Zm-6.195 3.285a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 1 1 1.06-1.06l2.47 2.47V4.5a.75.75 0 0 1 1.5 0v6.435l2.47-2.47a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
   </svg>
+);
+const WikiIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+    </svg>
 );
 const LogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-accent" {...props}>
@@ -49,8 +54,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView, isC
   const navItems = [
     { id: 'tasks', label: 'Tasks', icon: <TasksIcon className="w-6 h-6"/> },
     { id: 'pinned', label: 'Pinned', icon: <PinIcon className="w-6 h-6"/> },
-    { id: 'agents', label: 'Agents', icon: <AgentsIcon className="w-6 h-6"/> },
+    { id: 'agents', label: 'Agents', icon: <RocketIcon className="w-6 h-6"/> },
     { id: 'workflows', label: 'Workflows', icon: <WorkflowsIcon className="w-6 h-6"/> },
+    { id: 'wiki', label: 'Wiki', icon: <WikiIcon className="w-6 h-6" /> },
     { id: 'archived', label: 'Archived', icon: <ArchivedIcon className="w-6 h-6"/> },
   ];
 

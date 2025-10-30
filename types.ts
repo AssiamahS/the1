@@ -48,3 +48,15 @@ export interface WorkflowNode {
   // Fix: Replaced JSX.Element with React.ReactElement to resolve missing JSX namespace error.
   icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
 }
+
+export interface WorkflowConnection {
+  from: string;
+  to: string;
+}
+
+export interface StickyNote {
+  id: string;
+  content: string;
+  position: Point;
+  color: string;
+}

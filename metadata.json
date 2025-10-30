@@ -1,5 +1,5 @@
 {
-  "name": "Task Manager Agent v8",
+  "name": "Task Manager Agent v9",
   "description": "An intelligent task management system where a user acts as a Human Manager, interacting with a Task Manager Agent (TMA) powered by Gemini. The TMA can retrieve, update, and create tasks by delegating to specialized AI sub-agents.",
   "requestFramePermissions": []
 }

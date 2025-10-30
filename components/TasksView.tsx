@@ -9,12 +9,13 @@ interface TasksViewProps {
   onOpenTaskChat: (task: Task) => void;
   onPinTask: (taskId: string) => void;
   onArchiveTask: (taskId: string) => void;
+  onCreateNewTask: () => void;
   activeTaskId: string | null;
   isChatClosed: boolean;
   onOpenChat: () => void;
 }
 
-export const TasksView: React.FC<TasksViewProps> = ({ tasks, onSelectTask, onOpenTaskChat, onPinTask, onArchiveTask, activeTaskId, isChatClosed, onOpenChat }) => {
+export const TasksView: React.FC<TasksViewProps> = ({ tasks, onSelectTask, onOpenTaskChat, onPinTask, onArchiveTask, onCreateNewTask, activeTaskId, isChatClosed, onOpenChat }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeFilters, setActiveFilters] = useState<{ status: Status | null, agent: Agent | null }>({
@@ -50,6 +51,7 @@ export const TasksView: React.FC<TasksViewProps> = ({ tasks, onSelectTask, onOpe
         onViewModeChange={setViewMode}
         isChatClosed={isChatClosed}
         onOpenChat={onOpenChat}
+        onCreateNewTask={onCreateNewTask}
       />
       <div className="flex-1 overflow-y-auto p-6">
         {pinnedTasks.length > 0 && (

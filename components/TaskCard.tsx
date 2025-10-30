@@ -74,13 +74,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelect, onOpenChat, 
           <span className="text-sm font-medium text-text-secondary">{task.id}</span>
            <div className="flex items-center gap-2">
             {task.pinned && <PinIcon pinned={true} />}
-            <button
-                onClick={(e) => { e.stopPropagation(); onOpenChat(task); }}
-                className="text-text-secondary hover:text-accent p-1 rounded-full hover:bg-card-hover"
-                aria-label="Open task chat"
-            >
-                <PlusCircleIcon className="w-5 h-5" />
-            </button>
             <div className="relative" ref={menuRef}>
               <button 
                 onClick={handleMenuToggle}
@@ -110,6 +103,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onSelect, onOpenChat, 
             <span className="text-xs text-text-secondary">{task.status}</span>
           </div>
         </div>
+        <button
+            onClick={(e) => { e.stopPropagation(); onOpenChat(task); }}
+            className="text-text-secondary hover:text-accent p-1 rounded-full hover:bg-card-hover"
+            aria-label="Open task chat"
+        >
+            <PlusCircleIcon className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );

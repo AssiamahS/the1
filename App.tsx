@@ -6,8 +6,9 @@ import { AgentsView } from './components/AgentsView';
 import { WorkflowsView } from './components/WorkflowsView';
 import { ArchivedView } from './components/ArchivedView';
 import { PinnedView } from './components/PinnedView';
+import { WikiView } from './components/WikiView';
 import { TaskChatModal } from './components/TaskChatModal';
-import { Task } from './types';
+import { Task, Agent, Status } from './types';
 import { INITIAL_TASKS } from './constants';
 
 const App: React.FC = () => {
@@ -28,6 +29,27 @@ const App: React.FC = () => {
     if (taskForChatModal?.id === taskId) {
         setTaskForChatModal(prev => prev ? { ...prev, ...updatedArgs } : null);
     }
+  };
+  
+  const handleCreateNewTask = () => {
+    const newIdNumber = tasks.reduce((max, t) => {
+        const idNum = parseInt(t.id.split('-')[1]);
+        return idNum > max ? idNum : max;
+    }, 0) + 1;
+
+    const newTaskId = `TSK-${String(newIdNumber).padStart(3, '0')}`;
+    const newTask: Task = {
+        id: newTaskId,
+        title: 'New Task',
+        description: 'Please provide a detailed description for this new task.',
+        agent: Agent.UNASSIGNED,
+        status: Status.BACKLOG,
+        pinned: false,
+        archived: false,
+    };
+    setTasks(currentTasks => [newTask, ...currentTasks]);
+    setActiveView('tasks');
+    setSelectedTask(newTask);
   };
 
   const handlePinTask = (taskId: string) => {
@@ -63,6 +85,7 @@ const App: React.FC = () => {
             onOpenTaskChat={setTaskForChatModal}
             onPinTask={handlePinTask}
             onArchiveTask={handleArchiveTask}
+            onCreateNewTask={handleCreateNewTask}
             activeTaskId={selectedTask?.id ?? null}
             isChatClosed={chatState.isClosed}
             onOpenChat={() => setChatState({ ...chatState, isClosed: false, isMinimized: false })}
@@ -80,13 +103,15 @@ const App: React.FC = () => {
           />
         );
       case 'agents':
-        return <AgentsView />;
+        return <AgentsView tasks={tasks} />;
       case 'workflows':
         return <WorkflowsView />;
       case 'archived':
         return <ArchivedView tasks={archivedTasks} onRestoreTask={handleRestoreTask} />;
+      case 'wiki':
+        return <WikiView />;
       default:
-        return <TasksView tasks={visibleTasks} onSelectTask={setSelectedTask} onOpenTaskChat={setTaskForChatModal} onPinTask={handlePinTask} onArchiveTask={handleArchiveTask} activeTaskId={selectedTask?.id ?? null} isChatClosed={chatState.isClosed} onOpenChat={() => setChatState({ ...chatState, isClosed: false, isMinimized: false })}/>;
+        return <TasksView tasks={visibleTasks} onSelectTask={setSelectedTask} onOpenTaskChat={setTaskForChatModal} onPinTask={handlePinTask} onArchiveTask={handleArchiveTask} onCreateNewTask={handleCreateNewTask} activeTaskId={selectedTask?.id ?? null} isChatClosed={chatState.isClosed} onOpenChat={() => setChatState({ ...chatState, isClosed: false, isMinimized: false })}/>;
     }
   };
 

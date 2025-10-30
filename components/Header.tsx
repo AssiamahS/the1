@@ -22,7 +22,11 @@ const ChatIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.158 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l3.662-3.738c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.206 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.344 48.344 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
   </svg>
 );
-
+const PlusIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+  </svg>
+);
 
 
 interface HeaderProps {
@@ -34,9 +38,10 @@ interface HeaderProps {
     onViewModeChange: (mode: 'grid' | 'list') => void;
     isChatClosed: boolean;
     onOpenChat: () => void;
+    onCreateNewTask: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchTermChange, activeFilters, onActiveFiltersChange, viewMode, onViewModeChange, isChatClosed, onOpenChat }) => {
+export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchTermChange, activeFilters, onActiveFiltersChange, viewMode, onViewModeChange, isChatClosed, onOpenChat, onCreateNewTask }) => {
 
   const statusOptions = Object.values(Status);
   const agentOptions = Object.values(Agent);
@@ -46,6 +51,13 @@ export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchTermChange, 
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-text-primary">Tasks Dashboard</h1>
          <div className="flex items-center gap-2">
+            <button 
+              onClick={onCreateNewTask}
+              className="flex items-center gap-2 px-3 py-1.5 bg-accent text-white font-semibold rounded-md hover:bg-accent-hover focus:ring-2 focus:ring-accent focus:outline-none transition-colors"
+            >
+              <PlusIcon className="w-5 h-5"/>
+              <span>New Task</span>
+            </button>
             <div className="bg-card border border-border p-1 rounded-md flex">
               <button onClick={() => onViewModeChange('list')} className={`p-1 rounded ${viewMode === 'list' ? 'bg-accent text-white' : 'text-text-secondary hover:bg-sidebar'}`}><ListIcon className="w-5 h-5"/></button>
               <button onClick={() => onViewModeChange('grid')} className={`p-1 rounded ${viewMode === 'grid' ? 'bg-accent text-white' : 'text-text-secondary hover:bg-sidebar'}`}><GridIcon className="w-5 h-5"/></button>
