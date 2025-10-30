@@ -1,3 +1,4 @@
+import React from 'react';
 
 export enum Agent {
   QWEN_DEV = 'QwenDev',
@@ -19,6 +20,7 @@ export interface Task {
   agent: Agent;
   status: Status;
   pinned: boolean;
+  archived?: boolean;
 }
 
 export enum MessageSender {
@@ -31,4 +33,17 @@ export interface ChatMessage {
   sender: MessageSender;
   text: string;
   tasks?: Task[];
+}
+
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface WorkflowNode {
+  id: string;
+  type: string;
+  label: string;
+  position: Point;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
 }

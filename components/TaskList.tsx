@@ -1,20 +1,49 @@
 import React from 'react';
 import { Task } from '../types';
 import { TaskCard } from './TaskCard';
+import { TaskListRow } from './TaskListRow';
 
 interface TaskListProps {
   tasks: Task[];
-  setTasks: (tasks: Task[]) => void; // Or a more specific update function
   onSelectTask: (task: Task | null) => void;
   onOpenTaskChat: (task: Task) => void;
+  onPinTask: (taskId: string) => void;
+  onArchiveTask: (taskId: string) => void;
   activeTaskId: string | null;
+  viewMode?: 'grid' | 'list';
 }
 
-export const TaskList: React.FC<TaskListProps> = ({ tasks, onSelectTask, onOpenTaskChat, activeTaskId }) => {
+export const TaskList: React.FC<TaskListProps> = ({ 
+  tasks, 
+  onSelectTask, 
+  onOpenTaskChat,
+  onPinTask,
+  onArchiveTask,
+  activeTaskId,
+  viewMode = 'grid'
+}) => {
   if (tasks.length === 0) {
     return <div className="text-center text-text-secondary py-10">No tasks found.</div>
   }
   
+  if (viewMode === 'list') {
+    return (
+      <div className="space-y-2">
+        {tasks.map(task => (
+          <TaskListRow
+            key={task.id}
+            task={task}
+            onSelect={() => onSelectTask(task)}
+            onOpenChat={onOpenTaskChat}
+            onPin={onPinTask}
+            onArchive={onArchiveTask}
+            isActive={task.id === activeTaskId}
+          />
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       {tasks.map(task => (
@@ -23,6 +52,8 @@ export const TaskList: React.FC<TaskListProps> = ({ tasks, onSelectTask, onOpenT
           task={task}
           onSelect={() => onSelectTask(task)}
           onOpenChat={onOpenTaskChat}
+          onPin={onPinTask}
+          onArchive={onArchiveTask}
           isActive={task.id === activeTaskId}
         />
       ))}

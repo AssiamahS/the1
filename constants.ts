@@ -9,6 +9,7 @@ export const INITIAL_TASKS: Task[] = [
     agent: Agent.QWEN_DEV,
     status: Status.IN_PROGRESS,
     pinned: true,
+    archived: false,
   },
   {
     id: 'TSK-002',
@@ -17,6 +18,7 @@ export const INITIAL_TASKS: Task[] = [
     agent: Agent.CLAUDE_DESIGNER,
     status: Status.IN_PROGRESS,
     pinned: false,
+    archived: false,
   },
   {
     id: 'TSK-003',
@@ -25,6 +27,7 @@ export const INITIAL_TASKS: Task[] = [
     agent: Agent.CLAUDE_DESIGNER,
     status: Status.BACKLOG,
     pinned: false,
+    archived: false,
   },
   {
     id: 'TSK-004',
@@ -33,6 +36,7 @@ export const INITIAL_TASKS: Task[] = [
     agent: Agent.QWEN_DEV,
     status: Status.BLOCKED,
     pinned: false,
+    archived: false,
   },
 ];
 
